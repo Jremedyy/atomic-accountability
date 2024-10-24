@@ -1,8 +1,6 @@
 package com.atomicaccountability.atomic_accountability.entity;
 
-import com.atomicaccountability.atomic_accountability.enums.NotificationPref;
 import jakarta.persistence.*;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,41 +8,50 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
-@Table(name = "users")
+@Table(name = "habits")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User {
+public class Habit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(nullable = false, unique = true)
-    private String username;
-
-    @Column(name = "first_name", nullable = false)
-    private String firstName;
-
-    @Column(name = "last_name", nullable = false)
-    private String lastName;
-
-    @Column(nullable = false, unique = true)
-    private String email;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Column(nullable = false)
-    private String password;
+    private String name;
 
-    @Column(name = "notification_pref")
-    private NotificationPref notificationPref;
+    @Column
+    private String description;
 
-    @Column(name = "timezone")
-    private String timezone;
+    @Column(name = "start_date")
+    @Temporal(TemporalType.DATE)
+    private Date startDate;
+
+    @Column(name = "frequency", nullable = false)
+    private String frequency;
+
+    @Column(name = "streak_count")
+    private int streakCount;
+
+    @Column(name = "current_streak")
+    private int currentStreak;
+
+    @Column(name = "max_streak")
+    private int maxStreak;
+
+    @Column(name = "last_completed")
+    @Temporal(TemporalType.DATE)
+    private Date lastCompleted;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -56,4 +63,3 @@ public class User {
     @UpdateTimestamp
     private Date updatedAt;
 }
-

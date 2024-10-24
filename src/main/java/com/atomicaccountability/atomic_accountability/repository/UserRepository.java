@@ -1,4 +1,4 @@
-package com.atomicaccountability.atomic_accountability.Repository;
+package com.atomicaccountability.atomic_accountability.repository;
 
 import com.atomicaccountability.atomic_accountability.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
