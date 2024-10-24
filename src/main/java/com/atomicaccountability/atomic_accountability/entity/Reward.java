@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 
@@ -35,11 +36,9 @@ public class Reward {
     private String description;
 
     @Column(name = "earned_date")
-    @Temporal(TemporalType.DATE)
-    private Date earnedDate;
+    private LocalDateTime earnedDate;
 
     @Column(name = "created_at", nullable = false, updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
-    private Date createdAt;
+    private LocalDateTime createdAt;
 }

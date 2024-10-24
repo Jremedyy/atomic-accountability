@@ -24,6 +24,7 @@ public class AtomicAccountabilityApplication {
 	public ApplicationRunner initializeUser(){
 		final User defaultUser1 = new User();
 		defaultUser1.setUsername(UUID.randomUUID().toString());
+        defaultUser1.setPassword("Password1");
 		defaultUser1.setFirstName(UUID.randomUUID().toString());
 		defaultUser1.setLastName(UUID.randomUUID().toString());
 		defaultUser1.setEmail(UUID.randomUUID().toString());
@@ -32,15 +33,24 @@ public class AtomicAccountabilityApplication {
 
 		final User defaultUser2 = new User();
 		defaultUser2.setUsername(UUID.randomUUID().toString());
+        defaultUser2.setPassword("Password2");
 		defaultUser2.setFirstName(UUID.randomUUID().toString());
 		defaultUser2.setLastName(UUID.randomUUID().toString());
 		defaultUser2.setEmail(UUID.randomUUID().toString());
 		defaultUser2.setTimezone("UTC");
 		defaultUser2.setNotificationPref(NotificationPref.EMAIL);
 
+        final User defaultUser3 = new User();
+        defaultUser3.setUsername(UUID.randomUUID().toString());
+        defaultUser3.setPassword("Password2");
+        defaultUser3.setFirstName(UUID.randomUUID().toString());
+        defaultUser3.setLastName(UUID.randomUUID().toString());
+        defaultUser3.setEmail(UUID.randomUUID().toString());
+        defaultUser3.setTimezone("UTC");
+        defaultUser3.setNotificationPref(NotificationPref.EMAIL);
 
 
-		return args -> userRepository.saveAll(Arrays.asList(defaultUser1, defaultUser2));
+		return args -> userRepository.saveAll(Arrays.asList(defaultUser1, defaultUser3));
 
 
 	}

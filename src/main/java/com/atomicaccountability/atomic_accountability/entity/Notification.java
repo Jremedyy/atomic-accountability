@@ -1,7 +1,7 @@
 package com.atomicaccountability.atomic_accountability.entity;
 import jakarta.persistence.*;
 import lombok.*;
-import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -31,7 +31,6 @@ public class Notification {
     private String message;
 
     @Column(name = "sent_at")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date sentAt;
+    private LocalDateTime sentAt;
 }
 

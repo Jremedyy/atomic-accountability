@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -27,8 +27,7 @@ public class HabitLog {
     private Habit habit;
 
     @Column(name = "completion_date", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date completionDate;
+    private LocalDateTime completionDate;
 
     @Column(nullable = false)
     private String status;
@@ -37,7 +36,6 @@ public class HabitLog {
     private String notes;
 
     @Column(name = "created_at", nullable = false, updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
-    private Date createdAt;
+    private LocalDateTime createdAt;
 }
