@@ -1,6 +1,7 @@
 package com.atomicaccountability.atomic_accountability.repository;
 
 import com.atomicaccountability.atomic_accountability.entity.User;
+import com.atomicaccountability.atomic_accountability.enums.NotificationPref;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +22,22 @@ public class UserRepositoryTest {
     @Autowired
     private UserRepository repository;
 
-//    @Test
-//    public void save_StoresRecord_WhenRecordIsValid(){
-//
-//        final User expected = new User();
-//        expected.setFirstName(UUID.randomUUID().toString());
-//        expected.setLastName(UUID.randomUUID().toString());
-//
-//        final User saved = repository.save(expected);
-//        final User actual = entityManager.find(User.class, saved.getUsername());
-//
-//        assertThat(actual).isEqualTo(expected);
-//
-//    }
+    @Test
+    public void save_StoresRecord_WhenRecordIsValid(){
+
+        final User expected = new User();
+        expected.setUsername(UUID.randomUUID().toString());
+        expected.setPassword("Password1");
+        expected.setFirstName(UUID.randomUUID().toString());
+        expected.setLastName(UUID.randomUUID().toString());
+        expected.setEmail(UUID.randomUUID().toString());
+        expected.setTimezone("UTC");
+        expected.setNotificationPref(NotificationPref.TEXT);
+
+        final User saved = repository.save(expected);
+        final User actual = entityManager.find(User.class, saved.getId());
+
+        assertThat(actual).isEqualTo(expected);
+
+    }
 }
