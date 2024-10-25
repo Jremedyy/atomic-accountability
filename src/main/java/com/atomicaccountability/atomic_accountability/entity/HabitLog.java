@@ -1,5 +1,6 @@
 package com.atomicaccountability.atomic_accountability.entity;
 
+import com.atomicaccountability.atomic_accountability.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,7 +31,7 @@ public class HabitLog {
     private LocalDateTime completionDate;
 
     @Column(nullable = false)
-    private String status;
+    private Status status;
 
     @Column
     private String notes;

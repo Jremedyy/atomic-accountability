@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -34,8 +35,7 @@ public class Habit {
     private String description;
 
     @Column(name = "start_date")
-    @Temporal(TemporalType.DATE)
-    private Date startDate;
+    private LocalDateTime startDate;
 
     @Column(name = "frequency", nullable = false)
     private String frequency;
@@ -50,16 +50,13 @@ public class Habit {
     private int maxStreak;
 
     @Column(name = "last_completed")
-    @Temporal(TemporalType.DATE)
-    private Date lastCompleted;
+    private LocalDateTime lastCompleted;
 
     @Column(name = "created_at", nullable = false, updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
-    @Temporal(TemporalType.TIMESTAMP)
     @UpdateTimestamp
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 }

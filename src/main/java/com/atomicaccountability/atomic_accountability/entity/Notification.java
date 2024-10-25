@@ -1,4 +1,5 @@
 package com.atomicaccountability.atomic_accountability.entity;
+import com.atomicaccountability.atomic_accountability.enums.NotificationPref;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
@@ -25,7 +26,7 @@ public class Notification {
     private Habit habit;
 
     @Column(name = "notification_type", nullable = false)
-    private String notificationType;
+    private NotificationPref notificationType;
 
     @Column(nullable = false)
     private String message;
