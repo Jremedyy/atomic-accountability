@@ -2,6 +2,7 @@ package com.atomicaccountability.atomic_accountability.controller;
 
 import com.atomicaccountability.atomic_accountability.entity.User;
 import com.atomicaccountability.atomic_accountability.service.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,8 +33,13 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable UUID id) {
-        User user = userService.getUserById(id);
-        return ResponseEntity.ok(user);
+        try {
+            User user = userService.getUserById(id);
+            return ResponseEntity.ok(user);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
     }
 
     @PostMapping
