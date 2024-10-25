@@ -33,7 +33,7 @@ public class NotificationService {
     }
 
     public void deleteNotification(UUID id) {
-        Notification notification = getNotificationById(id); // Ensures notification exists
+        Notification notification = getNotificationById(id);
         repository.delete(notification);
     }
 

@@ -37,7 +37,7 @@ public class HabitLogService {
 
     // Delete a HabitLog by ID
     public void deleteHabitLog(UUID id) {
-        HabitLog habitLog = getHabitLogById(id); // Ensures HabitLog exists
+        HabitLog habitLog = getHabitLogById(id);
         repository.delete(habitLog);
     }
 

@@ -33,7 +33,7 @@ public class RewardService {
     }
 
     public void deleteReward(UUID id) {
-        Reward reward = getRewardById(id); // Ensures reward exists, otherwise throws an exception
+        Reward reward = getRewardById(id);
         repository.delete(reward);
     }
 

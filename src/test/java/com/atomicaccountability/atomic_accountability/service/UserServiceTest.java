@@ -1,6 +1,7 @@
 package com.atomicaccountability.atomic_accountability.service;
 
 import com.atomicaccountability.atomic_accountability.entity.User;
+import com.atomicaccountability.atomic_accountability.enums.NotificationPref;
 import com.atomicaccountability.atomic_accountability.repository.UserRepository;
 import com.atomicaccountability.atomic_accountability.util.TestEntityFactory;
 import jakarta.persistence.EntityNotFoundException;
@@ -43,7 +44,7 @@ class UserServiceTest {
 
     @Test
     void getUsers_ShouldReturnPagedUsers_WhenUsersExist() {
- 
+
         int pageNumber = 0;
         int pageSize = 2;
         User user1 = new User();
@@ -128,5 +129,44 @@ class UserServiceTest {
 
         then(repository).should(times(1)).findById(nonExistentId);
         then(repository).shouldHaveNoMoreInteractions();
+    }
+
+    @Test
+    void updateUser_ShouldReturnUpdatedUser_WhenUserExists() {
+        UUID existingId = UUID.randomUUID();
+        User existingUser = TestEntityFactory.createUser();
+        existingUser.setId(existingId);
+
+        User updatedUser = TestEntityFactory.createUser();
+        updatedUser.setFirstName("UpdatedFirstName");
+        updatedUser.setLastName("UpdatedLastName");
+        updatedUser.setUsername("UpdatedUsername");
+        updatedUser.setNotificationPref(NotificationPref.EMAIL);
+
+        given(repository.findById(existingId)).willReturn(Optional.of(existingUser));
+        given(repository.save(existingUser)).willReturn(existingUser);
+
+        User result = service.updateUser(existingId, updatedUser);
+
+        assertThat(result).isNotNull();
+        assertThat(result.getFirstName()).isEqualTo("UpdatedFirstName");
+        assertThat(result.getLastName()).isEqualTo("UpdatedLastName");
+        assertThat(result.getUsername()).isEqualTo("UpdatedUsername");
+        assertThat(result.getNotificationPref()).isEqualTo(updatedUser.getNotificationPref());
+
+        verify(repository, times(1)).findById(existingId);
+        verify(repository, times(1)).save(existingUser);
+    }
+
+    @Test
+    void updateUser_ShouldThrowException_WhenUserDoesNotExist() {
+        UUID nonExistentId = UUID.randomUUID();
+        User updatedUser = TestEntityFactory.createUser();
+
+        given(repository.findById(nonExistentId)).willReturn(Optional.empty());
+
+        assertThrows(EntityNotFoundException.class, () -> service.updateUser(nonExistentId, updatedUser));
+
+        verify(repository, times(1)).findById(nonExistentId);
     }
 }

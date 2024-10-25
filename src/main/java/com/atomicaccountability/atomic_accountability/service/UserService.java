@@ -43,4 +43,18 @@ public class UserService {
         }
         repository.deleteById(id);
     }
+
+
+    @Transactional
+    public User updateUser(final UUID id, final User updatedUser) {
+        User existingUser = repository.findById(id).orElseThrow(() ->
+                new EntityNotFoundException("User with ID " + id + " not found"));
+
+        existingUser.setFirstName(updatedUser.getFirstName());
+        existingUser.setLastName(updatedUser.getLastName());
+        existingUser.setUsername(updatedUser.getUsername());
+        existingUser.setNotificationPref(updatedUser.getNotificationPref());
+
+        return repository.save(existingUser);
+    }
 }

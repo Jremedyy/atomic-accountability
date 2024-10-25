@@ -36,7 +36,7 @@ public class HabitService {
 
     @Transactional
     public void deleteHabit(UUID id) {
-        Habit habit = getHabitById(id); // Ensures habit exists, otherwise throws an exception
+        Habit habit = getHabitById(id);
         repository.delete(habit);
     }
 
