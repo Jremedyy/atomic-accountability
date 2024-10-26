@@ -80,14 +80,14 @@ class UserServiceTest {
     }
 
     @Test
-    void getUserById_ShouldReturnNull_WhenUserDoesNotExist() {
-
+    void getUserById_ShouldThrowException_WhenUserDoesNotExist() {
         UUID nonExistentId = UUID.randomUUID();
         given(repository.findById(nonExistentId)).willReturn(Optional.empty());
 
-        User result = service.getUserById(nonExistentId);
+        assertThrows(EntityNotFoundException.class, () -> {
+            service.getUserById(nonExistentId);
+        });
 
-        assertThat(result).isNull();
         verify(repository, times(1)).findById(nonExistentId);
     }
 

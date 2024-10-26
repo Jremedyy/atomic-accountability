@@ -7,10 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
-
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
@@ -28,7 +27,8 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public User getUserById(final UUID id) {
-        return repository.findById(id).orElse(null);
+        return repository.findById(id).orElseThrow(() ->
+                new EntityNotFoundException("User not found"));
     }
 
     @Transactional
@@ -39,16 +39,15 @@ public class UserService {
     @Transactional
     public void delete(final UUID id) {
         if (repository.findById(id).isEmpty()) {
-            throw new EntityNotFoundException("User with ID " + id + " not found");
+            throw new EntityNotFoundException("Cannot delete: User with ID " + id + " not found");
         }
         repository.deleteById(id);
     }
 
-
     @Transactional
     public User updateUser(final UUID id, final User updatedUser) {
         User existingUser = repository.findById(id).orElseThrow(() ->
-                new EntityNotFoundException("User with ID " + id + " not found"));
+                new EntityNotFoundException("Cannot update: User with ID " + id + " not found"));
 
         existingUser.setFirstName(updatedUser.getFirstName());
         existingUser.setLastName(updatedUser.getLastName());

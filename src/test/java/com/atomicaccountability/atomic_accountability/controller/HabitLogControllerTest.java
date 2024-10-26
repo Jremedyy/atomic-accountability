@@ -75,8 +75,8 @@ class HabitLogControllerTest {
     @Test
     void getHabitLogsByHabit_ShouldReturnListOfHabitLogs() throws Exception {
         UUID habitId = UUID.randomUUID();
-        HabitLog habitLog1 = new HabitLog(); // Populate with necessary fields
-        HabitLog habitLog2 = new HabitLog(); // Populate with necessary fields
+        HabitLog habitLog1 = new HabitLog();
+        HabitLog habitLog2 = new HabitLog();
         given(habitLogService.getHabitLogsByHabit(habitId)).willReturn(List.of(habitLog1, habitLog2));
 
         mockMvc.perform(get("/api/habitlogs/habit/{habitId}", habitId))
@@ -89,7 +89,7 @@ class HabitLogControllerTest {
 
     @Test
     void createHabitLog_ShouldReturnCreatedHabitLog() throws Exception {
-        HabitLog habitLog = new HabitLog(); // Populate with necessary fields
+        HabitLog habitLog = new HabitLog();
         given(habitLogService.saveHabitLog(habitLog)).willReturn(habitLog);
 
         mockMvc.perform(post("/api/habitlogs")
@@ -104,7 +104,7 @@ class HabitLogControllerTest {
     @Test
     void updateHabitLog_ShouldReturnUpdatedHabitLog() throws Exception {
         UUID id = UUID.randomUUID();
-        HabitLog updatedHabitLog = new HabitLog(); // Populate with necessary fields
+        HabitLog updatedHabitLog = new HabitLog();
         given(habitLogService.updateHabitLog(id, updatedHabitLog)).willReturn(updatedHabitLog);
 
         mockMvc.perform(put("/api/habitlogs/{id}", id)

@@ -1,6 +1,7 @@
 package com.atomicaccountability.atomic_accountability.controller;
 
 import com.atomicaccountability.atomic_accountability.entity.User;
+import com.atomicaccountability.atomic_accountability.exception.GlobalExceptionHandler;
 import com.atomicaccountability.atomic_accountability.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityNotFoundException;
@@ -9,7 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -33,6 +37,7 @@ class UserControllerTest {
     @MockBean
     private UserService userService;
 
+    @MockBean
     private UserController userController;
 
     private ObjectMapper objectMapper;
@@ -47,8 +52,8 @@ class UserControllerTest {
 
     @Test
     void getUsers_ShouldReturnPageOfUsers() throws Exception {
-        User user1 = new User(); // Populate fields as necessary
-        User user2 = new User(); // Populate fields as necessary
+        User user1 = new User();
+        User user2 = new User();
         Page<User> usersPage = new PageImpl<>(List.of(user1, user2), PageRequest.of(0, 10), 2);
         given(userService.getUsers(0, 10)).willReturn(usersPage);
 
@@ -81,7 +86,8 @@ class UserControllerTest {
     @Test
     void getUserById_ShouldReturn404_WhenUserDoesNotExist() throws Exception {
         UUID id = UUID.randomUUID();
-        given(userService.getUserById(id)).willThrow(new EntityNotFoundException());
+        // Simulate non-existent user by throwing EntityNotFoundException
+        given(userService.getUserById(id)).willThrow(new EntityNotFoundException("User not found"));
 
         mockMvc.perform(get("/api/users/{id}", id))
                 .andExpect(status().isNotFound());
@@ -91,7 +97,7 @@ class UserControllerTest {
 
     @Test
     void createUser_ShouldReturnCreatedUser() throws Exception {
-        User user = new User(); // Populate with necessary fields
+        User user = new User();
         given(userService.save(user)).willReturn(user);
 
         mockMvc.perform(post("/api/users")
@@ -106,7 +112,7 @@ class UserControllerTest {
     @Test
     void updateUser_ShouldReturnUpdatedUser() throws Exception {
         UUID id = UUID.randomUUID();
-        User updatedUser = new User(); // Populate with necessary fields
+        User updatedUser = new User();
         given(userService.updateUser(id, updatedUser)).willReturn(updatedUser);
 
         mockMvc.perform(put("/api/users/{id}", id)

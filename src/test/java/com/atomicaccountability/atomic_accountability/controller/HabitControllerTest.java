@@ -9,13 +9,9 @@ import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -54,7 +50,7 @@ class HabitControllerTest {
     @Test
     void getHabitById_ShouldReturnHabit_WhenHabitExists() throws Exception {
         UUID id = UUID.randomUUID();
-        Habit habit = new Habit(); // Populate with necessary fields
+        Habit habit = new Habit();
         habit.setId(id);
 
         given(habitService.getHabitById(id)).willReturn(habit);
@@ -95,7 +91,7 @@ class HabitControllerTest {
 
     @Test
     void createHabit_ShouldReturnCreatedHabit() throws Exception {
-        Habit habit = new Habit(); // Populate with necessary fields
+        Habit habit = new Habit();
         given(habitService.saveHabit(habit)).willReturn(habit);
 
         mockMvc.perform(post("/api/habits")
@@ -110,7 +106,7 @@ class HabitControllerTest {
     @Test
     void updateHabit_ShouldReturnUpdatedHabit() throws Exception {
         UUID id = UUID.randomUUID();
-        Habit updatedHabit = new Habit(); // Populate with necessary fields
+        Habit updatedHabit = new Habit();
         given(habitService.updateHabit(id, updatedHabit)).willReturn(updatedHabit);
 
         mockMvc.perform(put("/api/habits/{id}", id)
@@ -135,7 +131,7 @@ class HabitControllerTest {
     @Test
     void completeHabit_ShouldReturnCompletedHabit() throws Exception {
         UUID id = UUID.randomUUID();
-        Habit completedHabit = new Habit(); // Populate with necessary fields
+        Habit completedHabit = new Habit();
         given(habitService.completeHabit(id)).willReturn(completedHabit);
 
         mockMvc.perform(post("/api/habits/{id}/complete", id))
