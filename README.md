@@ -30,14 +30,16 @@ JPA, and Spring MVC. Additionally, it leverages Lombok to reduce boilerplate cod
 2. Navigate to the project directory:
 
 3. Add Local PostgreSQL DB in CLI
+   ```bash
    export DB_USERNAME=your_database_username
    export DB_PASSWORD=your_database_password
-     
-5. Build the project using Maven:
+   ```
+
+4. Build the project using Maven:
    ```bash
    mvn clean install
    ```
-6. Run the application:
+5. Run the application:
    ```bash
    mvn spring-boot:run
    ```

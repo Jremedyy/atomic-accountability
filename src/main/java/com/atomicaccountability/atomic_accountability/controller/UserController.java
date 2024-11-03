@@ -23,6 +23,7 @@ public class UserController {
         this.userService = userService;
     }
 
+
     @GetMapping
     public ResponseEntity<Page<User>> getUsers(
             @RequestParam(value = "page", defaultValue = "0") int page,
